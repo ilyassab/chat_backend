@@ -37,6 +37,7 @@ class UserController {
         UserModel
         .find()
         .or([{fullname: new RegExp(query, 'i')}, {email: new RegExp(query, 'i')}])
+        .limit(10)
         .then(users => res.json(users))
         .catch(err => {
             return res.status(404).json({message: 'User not found'});

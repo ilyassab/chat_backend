@@ -2,7 +2,7 @@ import express from 'express';
 import {UserModel} from '../models';
 
 export default (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    if (req.path === '/user/login' || req.path === '/user/register' || req.path === '/user/verify') {
+    if (req.path === '/user/login' || req.path === '/user/register' || req.path === '/user/verify' || !/(user)|(files)|(dialogs)|(messages)/.test(req.path)) {
         return next();
     }
     

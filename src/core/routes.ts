@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import io from 'socket.io';
 import bodyParser from "body-parser";
 
@@ -37,4 +38,8 @@ export default (app: express.Express, io: io.Server) => {
 
     app.post('/files', parser.single('image'), UploadController.create);
     app.delete('/files/:id', UploadController.delete);
+
+    app.get('/*', function(req, res) {
+        res.sendFile(path.resolve(__dirname + '/../public/index.html'));
+    });
 }

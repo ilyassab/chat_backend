@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import {createServer} from 'http';
 import socket from 'socket.io';
 import dotenv from 'dotenv';
@@ -12,6 +13,8 @@ import createSocket from './core/socket';
 const app = express();
 const http = createServer(app);
 const io = socket(http);
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 createSocket(io);
 createRoutes(app, io);
