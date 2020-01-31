@@ -35,5 +35,8 @@
     "ts-node": "^8.5.4",
     "typescript": "^3.7.4",
     "validator": "^12.1.0"
+  },
+  "engines": {
+    "node": ">=10.14.2"
   }
 }
