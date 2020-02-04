@@ -2,6 +2,7 @@ import express from 'express';
 import io from 'socket.io';
 import {validationResult} from "express-validator";
 import bcrypt from 'bcrypt';
+import trasporter from '../core/nodemailer';
 
 import {UserModel} from '../models';
 import {createJWToken} from "../utils";
@@ -83,7 +84,20 @@ class UserController {
         }
 
         user.save().then((obj: any) => {
-            res.json(obj);
+            const message = {
+                to: obj.email,
+                subject: `Congratulations!`,
+                text: `Your verify link: https://chat-name.herokuapp.com/verify?hash=${obj.confirm_hash}`
+            };
+            trasporter.sendMail(message ,(err: any, info: any) => {
+                if (err) {
+                    return res.status(422).json({
+                        status: 'error',
+                        error: err
+                    });  
+                }
+                res.json(obj);
+            })
         }).catch(reason => {
             res.status(500).json({
                 status: "error",
